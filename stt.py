@@ -1,42 +1,42 @@
-from groq import Groq
+import requests
 import os
 import tempfile
 
-# Get API key from environment (Streamlit Secrets automatically loads this)
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
-
-# You can hardcode if needed:
-# GROQ_STT_MODEL = "whisper-large-v3"
 GROQ_STT_MODEL = "whisper-large-v3"
 
-# Initialize client only if key exists
-client = None
-if GROQ_API_KEY:
-    client = Groq(api_key=GROQ_API_KEY)
-
-
 def transcribe_audio(audio_bytes):
-    if not client:
-        return "Error: GROQ_API_KEY is not set. Please add it in Streamlit Secrets."
+    if not GROQ_API_KEY:
+        return "Error: GROQ_API_KEY not set in Streamlit Secrets."
 
     try:
-        # Save audio temporarily
+        # Save temp file
         with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp:
             tmp.write(audio_bytes)
             tmp_path = tmp.name
 
-        # Open and send to Groq
-        with open(tmp_path, "rb") as audio_file:
-            response = client.audio.transcriptions(
-                file=("audio.wav", audio_file),
-                model=GROQ_STT_MODEL,
-            )
+        url = "https://api.groq.com/openai/v1/audio/transcriptions"
 
-        # Delete temp file
+        headers = {
+            "Authorization": f"Bearer {GROQ_API_KEY}"
+        }
+
+        files = {
+            "file": ("audio.wav", open(tmp_path, "rb"), "audio/wav")
+        }
+
+        data = {
+            "model": GROQ_STT_MODEL
+        }
+
+        response = requests.post(url, headers=headers, files=files, data=data)
+
         os.unlink(tmp_path)
 
-        # Return transcribed text
-        return response.text
+        if response.status_code == 200:
+            return response.json()["text"]
+        else:
+            return f"Groq API Error: {response.text}"
 
     except Exception as e:
         return f"🎤 Error in transcription: {str(e)}"
