@@ -486,6 +486,6 @@ if st.session_state.messages_display:
 st.markdown("""
 <div class="foot">
     🐝 <a href="#">Bee Aura Tech</a>
-    <div class="foot-links">© 2024 Bee Aura Tech. All Rights Reserved. Enterprise AI Solutions</div>
+    <div class="foot-links">© 2026 Bee Aura Tech. All Rights Reserved. Enterprise AI Solutions</div>
 </div>
 """, unsafe_allow_html=True)
