@@ -413,7 +413,7 @@ if st.session_state.last_audio:
     st.markdown(f"""
     <div class="audio-wrap">
         <div class="audio-card">
-            <div class="audio-lbl">🔊 Voice Response</div>
+            <div class="audio-lbl"> Voice Response</div>
             <audio autoplay controls>
                 <source src="data:audio/mp3;base64,{b64}" type="audio/mp3">
             </audio>
@@ -431,33 +431,33 @@ st.markdown("""
 st.markdown('<div class="command-section"><div class="command-card">', unsafe_allow_html=True)
 col_audio, col_text = st.columns(2, gap="medium")
 with col_audio:
-    st.markdown('<div class="inp-sec-lbl">🎤 Voice Input</div>', unsafe_allow_html=True)
+    st.markdown('<div class="inp-sec-lbl"> Voice Input</div>', unsafe_allow_html=True)
     audio_input = st.audio_input("mic", label_visibility="collapsed")
 with col_text:
-    st.markdown('<div class="inp-sec-lbl">⌨️ Text Input</div>', unsafe_allow_html=True)
+    st.markdown('<div class="inp-sec-lbl"> Text Input</div>', unsafe_allow_html=True)
     text_input = st.text_input("txt", label_visibility="collapsed",
         placeholder="e.g., 'Show me Q3 revenue'")
 st.markdown('</div></div>', unsafe_allow_html=True)
 
 # ── BUTTON ─────────────────────────────────────────────────────────────────────
 st.markdown('<div class="btn-wrap">', unsafe_allow_html=True)
-submit = st.button("Analyze with Bee AI ✨", type="primary", use_container_width=True)
+submit = st.button("Analyze with Bee AI ", type="primary", use_container_width=True)
 st.markdown('</div>', unsafe_allow_html=True)
 
 # ── PROCESS ────────────────────────────────────────────────────────────────────
 if submit:
     user_text = ""
     if audio_input is not None:
-        with st.spinner("🎧 Transcribing..."):
+        with st.spinner("Transcribing..."):
             user_text = transcribe_audio(audio_input.read())
-        st.success(f"✅ Heard: *{user_text}*")
+        st.success(f" Heard: *{user_text}*")
     elif text_input.strip():
         user_text = text_input.strip()
     else:
-        st.warning("⚠️ Please speak or type your ERP issue.")
+        st.warning(" Please speak or type your ERP issue.")
 
     if user_text:
-        with st.spinner("🤔 Analyzing your ERP issue..."):
+        with st.spinner("Analyzing your ERP issue..."):
             response = get_erp_response(user_text, st.session_state.chat_history)
         st.session_state.chat_history += [
             {"role": "user", "content": user_text},
@@ -467,7 +467,7 @@ if submit:
             {"role": "user", "content": user_text},
             {"role": "assistant", "content": response}
         ]
-        with st.spinner("🔊 Generating voice..."):
+        with st.spinner(" Generating voice..."):
             st.session_state.last_audio = text_to_speech(response)
         st.rerun()
 
@@ -475,7 +475,7 @@ if submit:
 if st.session_state.messages_display:
     st.markdown("<br>", unsafe_allow_html=True)
     st.markdown('<div class="btn-wrap clr-wrap">', unsafe_allow_html=True)
-    if st.button("🗑️  Clear Conversation", use_container_width=True):
+    if st.button("Clear Conversation", use_container_width=True):
         st.session_state.chat_history = []
         st.session_state.messages_display = []
         st.session_state.last_audio = None
