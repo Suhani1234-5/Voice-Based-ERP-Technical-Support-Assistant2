@@ -19,7 +19,7 @@
 [![Whisper](https://img.shields.io/badge/Whisper-large--v3-7c3aed?style=for-the-badge)](https://groq.com)
 
 
-> **Intern Assessment — Use Case 3:** Voice-Based ERP Technical Support Assistant
+
 
 </div>
 
@@ -28,7 +28,6 @@
 
 **Bee Aura Tech ERP Voice Assistant** is an AI-powered, voice-first support system designed to automate first-level ERP support calls. Users can speak (or type) their ERP issue and receive instant, intelligent, voice-friendly responses — no human agent required for routine queries.
 
-Built for the **Intern Assessment (Use Case 3)**, this prototype demonstrates how LLMs + speech technology can reduce human intervention in repetitive ERP support workflows.
 
 ---
 
